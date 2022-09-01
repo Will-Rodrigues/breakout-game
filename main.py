@@ -1,11 +1,10 @@
-# TODO: hit bars
 # TODO: score
-# TODO: start menu
 
 # -------------------------
 from turtle import Screen
 from bar import PlayerBar
 from ball import Ball
+from hitbar import HitBar
 import time
 
 screen = Screen()
@@ -15,6 +14,8 @@ screen.tracer(0)
 
 player = PlayerBar()
 ball = Ball()
+hitbar = HitBar()
+hitbar.create_bars()
 
 is_on = True
 
@@ -37,5 +38,12 @@ while is_on:
     if ball.x_move != 0:
         if ball.distance(player) < 25 or ball.ycor() > 250:
             ball.hit_up_down()
+
+    for bar in hitbar.bars:
+        if ball.distance(bar) < 32:
+            #discover why is not removing the bar from the list
+            hitbar.remove_bar(bar)
+            ball.hit_up_down()
+            print(bar)
 
 screen.exitonclick()
